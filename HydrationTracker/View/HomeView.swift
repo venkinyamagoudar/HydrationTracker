@@ -8,25 +8,11 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State var isShowingAddView: Bool = true
+    @State var isShowingAddView: Bool = false
+    @State var currentHydration: Int = 0
+    @State var targetHydration: Int = 0
     
-    let waterIntakeEntries = [
-        WaterIntakeEntry(amount: "8 oz", timestamp: "Today, 10:00 AM"),
-        WaterIntakeEntry(amount: "12 oz", timestamp: "Today, 12:30 PM"),
-        WaterIntakeEntry(amount: "16 oz", timestamp: "Today, 3:45 PM"),
-        WaterIntakeEntry(amount: "8 oz", timestamp: "Today, 10:00 AM"),
-        WaterIntakeEntry(amount: "12 oz", timestamp: "Today, 12:30 PM"),
-        WaterIntakeEntry(amount: "16 oz", timestamp: "Today, 3:45 PM"),
-        WaterIntakeEntry(amount: "8 oz", timestamp: "Today, 10:00 AM"),
-        WaterIntakeEntry(amount: "12 oz", timestamp: "Today, 12:30 PM"),
-        WaterIntakeEntry(amount: "16 oz", timestamp: "Today, 3:45 PM"),
-        WaterIntakeEntry(amount: "8 oz", timestamp: "Today, 10:00 AM"),
-        WaterIntakeEntry(amount: "12 oz", timestamp: "Today, 12:30 PM"),
-        WaterIntakeEntry(amount: "16 oz", timestamp: "Today, 3:45 PM"),
-        WaterIntakeEntry(amount: "8 oz", timestamp: "Today, 10:00 AM"),
-        WaterIntakeEntry(amount: "12 oz", timestamp: "Today, 12:30 PM"),
-        WaterIntakeEntry(amount: "16 oz", timestamp: "Today, 3:45 PM")
-    ]
+    @State var waterIntakeEntries: [WaterIntakeEntry] = []
     var body: some View {
         ZStack {
             List {
@@ -34,8 +20,8 @@ struct HomeView: View {
                     .font(.title).fontWeight(.bold).foregroundStyle(Color.primary).backgroundStyle(Color(uiColor: .systemBackground)).textCase(.none)) {
                     HStack {
                         VStack {
-                            HydrationCardView(cardType: .hydrationTarget, amount: "2000")
-                            HydrationCardView(cardType: .curretHydration, amount: "2000")
+                            HydrationCardView(cardType: .hydrationTarget, amount: targetHydration)
+                            HydrationCardView(cardType: .curretHydration, amount: currentHydration)
                         }
                     }
                 }
@@ -43,7 +29,7 @@ struct HomeView: View {
                 .background(Color(uiColor: .systemBackground))
                 
                 Section(header: Text("Today's Water Log").font(.title).fontWeight(.bold).foregroundStyle(Color.primary).textCase(.none)) {
-                    ForEach(waterIntakeEntries, id: \.self) { entry in
+                    ForEach(waterIntakeEntries ?? [], id: \.self) { entry in
                         WaterIntakeRow(amount: entry.amount, timestamp: entry.timestamp)
                             .background(Color(uiColor: .secondarySystemGroupedBackground))
                     }
@@ -56,7 +42,7 @@ struct HomeView: View {
                 HStack {
                     Spacer()
                     Button {
-                        isShowingAddView = true
+                        isShowingAddView.toggle()
                     } label: {
                         Image(systemName: "plus")
                             .padding()
@@ -68,6 +54,13 @@ struct HomeView: View {
                     .padding()
                 }
             }
+        }
+        .sheet(isPresented: $isShowingAddView) {
+            AddWaterIntakeView(isPresented: $isShowingAddView, numberOfGlasses: $currentHydration, waterIntakeEntries: $waterIntakeEntries){
+                currentHydration += $0
+            }
+                .presentationDetents([.medium])
+                .presentationBackgroundInteraction(.disabled)
         }
     }
 }

@@ -15,6 +15,7 @@
 		24ADA88B2BA774E70022720F /* EditTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ADA88A2BA774E70022720F /* EditTargetView.swift */; };
 		24ADA88D2BA7750E0022720F /* WaterIntakeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ADA88C2BA7750E0022720F /* WaterIntakeRow.swift */; };
 		24ADA88F2BA775E90022720F /* WaterIntakeEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ADA88E2BA775E90022720F /* WaterIntakeEntry.swift */; };
+		24ADA8912BA797D40022720F /* AddWaterIntakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ADA8902BA797D40022720F /* AddWaterIntakeView.swift */; };
 		24BCCE3D2BA2EDEC004957A4 /* HydrationTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BCCE3C2BA2EDEC004957A4 /* HydrationTrackerApp.swift */; };
 		24BCCE3F2BA2EDEC004957A4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BCCE3E2BA2EDEC004957A4 /* ContentView.swift */; };
 		24BCCE412BA2EDEE004957A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24BCCE402BA2EDEE004957A4 /* Assets.xcassets */; };
@@ -50,6 +51,7 @@
 		24ADA88A2BA774E70022720F /* EditTargetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTargetView.swift; sourceTree = "<group>"; };
 		24ADA88C2BA7750E0022720F /* WaterIntakeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterIntakeRow.swift; sourceTree = "<group>"; };
 		24ADA88E2BA775E90022720F /* WaterIntakeEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterIntakeEntry.swift; sourceTree = "<group>"; };
+		24ADA8902BA797D40022720F /* AddWaterIntakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWaterIntakeView.swift; sourceTree = "<group>"; };
 		24BCCE392BA2EDEC004957A4 /* HydrationTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HydrationTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24BCCE3C2BA2EDEC004957A4 /* HydrationTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HydrationTrackerApp.swift; sourceTree = "<group>"; };
 		24BCCE3E2BA2EDEC004957A4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				241FB48C2BA75AB800D50BA5 /* HomeView.swift */,
 				24ADA88C2BA7750E0022720F /* WaterIntakeRow.swift */,
 				24ADA88A2BA774E70022720F /* EditTargetView.swift */,
+				24ADA8902BA797D40022720F /* AddWaterIntakeView.swift */,
 				241FB48F2BA75ADD00D50BA5 /* HydrationTabView.swift */,
 				241FB4912BA75C5300D50BA5 /* StatisticsView.swift */,
 				24ADA8862BA774670022720F /* HydrationCardView.swift */,
@@ -296,6 +299,7 @@
 				24ADA8892BA774A60022720F /* CardType.swift in Sources */,
 				241FB4902BA75ADD00D50BA5 /* HydrationTabView.swift in Sources */,
 				24BCCE3D2BA2EDEC004957A4 /* HydrationTrackerApp.swift in Sources */,
+				24ADA8912BA797D40022720F /* AddWaterIntakeView.swift in Sources */,
 				24ADA8872BA774670022720F /* HydrationCardView.swift in Sources */,
 				24ADA88B2BA774E70022720F /* EditTargetView.swift in Sources */,
 				24ADA88D2BA7750E0022720F /* WaterIntakeRow.swift in Sources */,

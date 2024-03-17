@@ -43,12 +43,15 @@ struct WaterIntakeRow: View {
         .padding(.horizontal, 16)
     }
     
-    // Function to format timestamp
     private func formatTimestamp(_ timestamp: String) -> String {
-        // You can implement your own logic to format the timestamp here
-        // For example, you can use DateFormatter to convert the timestamp to a more user-friendly format
-        return timestamp
-    }
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
+            if let date = formatter.date(from: timestamp) {
+                formatter.dateFormat = "MMM dd, yyyy hh:mm a"
+                return formatter.string(from: date)
+            }
+            return timestamp
+        }
 }
 
 #Preview {
