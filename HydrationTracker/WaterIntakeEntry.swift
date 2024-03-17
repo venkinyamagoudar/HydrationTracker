@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct WaterIntakeEntry: Hashable {
+    let amount: String
+    let timestamp: String
+}

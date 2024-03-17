@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+enum CardType {
+    case hydrationTarget
+    case curretHydration
+}
