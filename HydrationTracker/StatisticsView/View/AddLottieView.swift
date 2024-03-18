@@ -1,0 +1,47 @@
+//
+//  AddLottieView.swift
+//  HydrationTracker
+//
+//  Created by Venkatesh Nyamagoudar on 3/18/24.
+//
+
+import SwiftUI
+
+struct AddLottieView: UIViewRepresentable {
+    var body: some View {
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    }
+}
+
+#Preview {
+    AddLottieView()
+}
+struct AddLottieView: UIViewRepresentable {
+    let lottieFileName: String
+    let loopMode: LottieLoopMode
+    let contentMode: UIView.ContentMode
+    let animationView: LottieAnimationView
+    
+    init(lottieFileName: String, loopMode: LottieLoopMode = .loop, contentMode: UIView.ContentMode = .scaleAspectFit) {
+        self.lottieFileName = lottieFileName
+        self.animationView = LottieAnimationView(name: lottieFileName)
+        self.loopMode = loopMode
+        self.contentMode = contentMode
+    }
+    
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView(frame: .zero)
+        view.addSubview(animationView)
+        animationView.translatesAutoresizingMaskIntoConstraints = false
+        animationView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        animationView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        animationView.loopMode = loopMode
+        animationView.contentMode = contentMode
+        animationView.play()
+        return view
+    }
+    
+    func updateUIView(_ uiView: UIView, context: Context) {
+        
+    }
+}
