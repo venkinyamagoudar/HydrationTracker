@@ -70,6 +70,14 @@ struct HomeView: View {
         }
         .navigationBarTitleDisplayMode(.large)
         .navigationTitle("Hydration Tracker")
+        .navigationBarItems(trailing: Button(action: {
+            viewModel.isNotificationSettingsPresented.toggle()
+        }) {
+            Image(systemName: "bell")
+        })
+        .sheet(isPresented: $viewModel.isNotificationSettingsPresented) {
+            HyderationNotificationView()
+        }
     }
 }
 

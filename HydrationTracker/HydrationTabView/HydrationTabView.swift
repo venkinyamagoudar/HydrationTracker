@@ -29,7 +29,11 @@ struct HydrationTabView: View {
             }
             .tag(TabImages.statistics)
         }
-        .background(Color(uiColor: .systemBackground))
+        .background(Color(uiColor: .secondarySystemBackground))
+        .onAppear{
+            NotificationManager.shared.requestAuthorization()
+            NotificationManager.shared.scheduleDailyNotification()
+        }
     }
 }
 
