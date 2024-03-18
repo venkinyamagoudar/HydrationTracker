@@ -10,4 +10,7 @@ import Foundation
 enum CardType {
     case hydrationTarget
     case curretHydration
+    case average
+    case max
+    case daysCompletedTarget
 }

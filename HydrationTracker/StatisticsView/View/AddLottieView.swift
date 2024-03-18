@@ -6,16 +6,8 @@
 //
 
 import SwiftUI
+import Lottie
 
-struct AddLottieView: UIViewRepresentable {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    AddLottieView()
-}
 struct AddLottieView: UIViewRepresentable {
     let lottieFileName: String
     let loopMode: LottieLoopMode
@@ -44,4 +36,8 @@ struct AddLottieView: UIViewRepresentable {
     func updateUIView(_ uiView: UIView, context: Context) {
         
     }
+}
+
+#Preview {
+    AddLottieView(lottieFileName: LottieFiles.noDataFound)
 }

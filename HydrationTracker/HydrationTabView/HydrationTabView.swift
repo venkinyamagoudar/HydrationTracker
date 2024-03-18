@@ -21,7 +21,7 @@ struct HydrationTabView: View {
             .tag(TabImages.house)
             
             NavigationView {
-                StatisticsView()
+                StatisticsView(viewModel: StatisticsViewModel())
             }
             .tabItem {
                 Image(systemName: TabImages.statistics.rawValue)

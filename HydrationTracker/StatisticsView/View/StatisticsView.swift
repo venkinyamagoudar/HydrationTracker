@@ -8,55 +8,83 @@
 import SwiftUI
 
 struct StatisticsView: View {
-    @ObservedObject var viewModel: StatisticsViewModel
-    
+    @StateObject var viewModel: StatisticsViewModel = StatisticsViewModel()
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
-                VStack(spacing: 10) {
-                    Text("Glasses Consumed Last 7 Days")
-                        .font(.headline)
-                    BarGraphView(dataPoints: viewModel.last7DaysData)
-                        .frame(height: 200)
+            VStack {
+                VStack{
+                    HStack{
+                        StatisticsCardView(cardType: .average, viewModel: viewModel)
+                        StatisticsCardView(cardType: .max, viewModel: viewModel)
+                    }
+                    StatisticsCardView(cardType: .daysCompletedTarget, viewModel: viewModel)
                 }
-                
-                VStack(spacing: 10) {
-                    Text("Glasses Consumed Last 30 Days")
-                        .font(.headline)
-                    BarGraphView(dataPoints: viewModel.last30DaysData)
-                        .frame(height: 200)
+                .padding()
+                Picker(selection: $viewModel.selectedIndex, label: Text("Activity Period")) {
+                    Text("Last 7 Days").tag(0)
+                    Text("Last 30 Days").tag(1)
                 }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
                 
-                VStack(spacing: 10) {
-                    Text("Statistics")
-                        .font(.headline)
-                    
-                    HStack {
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text("Average Glasses Consumed")
-                            Text("Max Glasses Consumed")
-                            Text("Days Completed Target")
-                        }
-                        
-                        Spacer()
-                        
-                        VStack(alignment: .trailing, spacing: 5) {
-                            Text("\(viewModel.averageGlasses)")
-                            Text("\(viewModel.maxGlasses)")
-                            Text("\(viewModel.daysCompletedTarget)")
+                GeometryReader { geometry in
+                    VStack {
+                        if viewModel.selectedIndex == 0 {
+                            if viewModel.hasLastSevenDaysData {
+                                BarChartActivityView(data: viewModel.lastSevenDaysData, title: "Last 7 Days Activity", height: geometry.size.height * 0.7)
+                            } else {
+                                AddLottieView(lottieFileName: LottieFiles.noDataFound)
+                            }
+                        } else {
+                            if viewModel.hasLastThirtyDays {
+                                BarChartActivityView(data: viewModel.lastThirtyDaysData, title: "Previous 30 Days Activity", height: geometry.size.height * 0.7)
+                            } else {
+                                AddLottieView(lottieFileName: LottieFiles.noDataFound)
+                            }
                         }
                     }
                 }
+                .frame(height: UIScreen.main.bounds.height * 0.7)
+                .onAppear {
+                    viewModel.fetchStatistics()
+                }
+                .navigationTitle("Activity")
             }
-            .padding()
-        }
-        .navigationBarTitle("Statistics")
-        .onAppear {
-            viewModel.fetchStatistics()
         }
     }
 }
 
 #Preview {
     StatisticsView()
+}
+
+enum LottieFiles {
+    static var noItemsPresent = "NoItemsPresent"
+    static var noDataFound = "NoDataFound"
+}
+
+
+extension Date {
+    func toString(dateStyle: DateFormatter.Style, timeStyle: DateFormatter.Style) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = dateStyle
+        dateFormatter.timeStyle = timeStyle
+        return dateFormatter.string(from: self)
+    }
+    
+    func previousSevenDaysDates() -> [String] {
+        var dates: [String] = []
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
+        
+        for day in 1...7 {
+            if let previousDate = Calendar.current.date(byAdding: .day, value: -day, to: self) {
+                let dateString = previousDate.toString(dateStyle: .short, timeStyle: .none)
+                dates.append(dateString)
+            }
+        }
+        
+        return dates
+    }
 }
