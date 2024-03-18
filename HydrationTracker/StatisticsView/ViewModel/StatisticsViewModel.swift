@@ -21,10 +21,20 @@ class StatisticsViewModel: ObservableObject {
     let coreDataManager = CoreDataManager.shared
 
     var hasLastSevenDaysData: Bool {
+        if lastSevenDaysData.count == 1 {
+            if lastSevenDaysData[0].currentHydration == 0 {
+                return false
+            }
+        }
         return !lastSevenDaysData.isEmpty
     }
     
     var hasLastThirtyDays: Bool {
+        if lastThirtyDaysData.count == 1 {
+            if lastThirtyDaysData[0].currentHydration == 0 {
+                return false
+            }
+        }
         return !lastThirtyDaysData.isEmpty
     }
     

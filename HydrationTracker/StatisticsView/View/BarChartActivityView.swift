@@ -34,6 +34,11 @@ struct BarChartActivityView: View {
             .chartYAxis {
                 AxisMarks(position: .leading)
             }
+            HStack {
+                Color.blue.frame(width: 20, height: 20)
+                    .cornerRadius(20)
+                Text("No. of Glasses")
+            }
         }
     }
 }
