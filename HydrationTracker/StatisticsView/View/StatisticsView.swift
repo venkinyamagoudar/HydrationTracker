@@ -20,7 +20,7 @@ struct StatisticsView: View {
                     StatisticsCardView(cardType: .daysCompletedTarget, viewModel: viewModel)
                 }
                 .padding()
-                Picker(selection: $viewModel.selectedIndex, label: Text("Activity Period")) {
+                Picker(selection: $viewModel.selectedIndex, label: Text("Statistics")) {
                     Text("Last 7 Days").tag(0)
                     Text("Last 30 Days").tag(1)
                 }
@@ -31,13 +31,13 @@ struct StatisticsView: View {
                     VStack {
                         if viewModel.selectedIndex == 0 {
                             if viewModel.hasLastSevenDaysData {
-                                BarChartActivityView(data: viewModel.lastSevenDaysData, title: "Last 7 Days Activity", height: geometry.size.height * 0.7)
+                                BarChartActivityView(data: viewModel.lastSevenDaysData, title: "Last 7 Days Stats", height: geometry.size.height * 0.7)
                             } else {
                                 AddLottieView(lottieFileName: LottieFiles.noDataFound)
                             }
                         } else {
                             if viewModel.hasLastThirtyDays {
-                                BarChartActivityView(data: viewModel.lastThirtyDaysData, title: "Previous 30 Days Activity", height: geometry.size.height * 0.7)
+                                BarChartActivityView(data: viewModel.lastThirtyDaysData, title: "Previous 30 Days Stats", height: geometry.size.height * 0.7)
                             } else {
                                 AddLottieView(lottieFileName: LottieFiles.noDataFound)
                             }
@@ -48,7 +48,7 @@ struct StatisticsView: View {
                 .onAppear {
                     viewModel.fetchStatistics()
                 }
-                .navigationTitle("Activity")
+                .navigationTitle("Statistics")
             }
         }
     }
