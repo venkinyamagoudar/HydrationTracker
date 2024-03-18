@@ -40,9 +40,3 @@ struct HydrationTabView: View {
 #Preview {
     HydrationTabView()
 }
-
-
-enum TabImages: String, CaseIterable {
-    case house = "house"
-    case statistics = "chart.bar.xaxis"
-}

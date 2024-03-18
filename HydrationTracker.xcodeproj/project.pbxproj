@@ -33,6 +33,9 @@
 		24DC0E012BA8A4D40055FCA0 /* StatisticsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DC0E002BA8A4D40055FCA0 /* StatisticsCardView.swift */; };
 		24DC0E032BA8AE040055FCA0 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DC0E022BA8AE040055FCA0 /* NotificationManager.swift */; };
 		24DC0E062BA8AFB70055FCA0 /* HyderationNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DC0E052BA8AFB70055FCA0 /* HyderationNotificationView.swift */; };
+		24DC0E092BA8BEA50055FCA0 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DC0E082BA8BEA50055FCA0 /* Extension+Date.swift */; };
+		24DC0E0B2BA8BED70055FCA0 /* LottieFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DC0E0A2BA8BED70055FCA0 /* LottieFiles.swift */; };
+		24DC0E0D2BA8BF240055FCA0 /* TabImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DC0E0C2BA8BF240055FCA0 /* TabImages.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +84,9 @@
 		24DC0E002BA8A4D40055FCA0 /* StatisticsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsCardView.swift; sourceTree = "<group>"; };
 		24DC0E022BA8AE040055FCA0 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		24DC0E052BA8AFB70055FCA0 /* HyderationNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyderationNotificationView.swift; sourceTree = "<group>"; };
+		24DC0E082BA8BEA50055FCA0 /* Extension+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
+		24DC0E0A2BA8BED70055FCA0 /* LottieFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieFiles.swift; sourceTree = "<group>"; };
+		24DC0E0C2BA8BF240055FCA0 /* TabImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabImages.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +157,7 @@
 				24DC0DEB2BA886390055FCA0 /* HomeView */,
 				24DC0DEC2BA8867A0055FCA0 /* StatisticsView */,
 				24C823252BA8174900F23153 /* Manager */,
+				24DC0E072BA8BE900055FCA0 /* Extensions */,
 				24BCCE402BA2EDEE004957A4 /* Assets.xcassets */,
 				24BCCE422BA2EDEE004957A4 /* Preview Content */,
 				24C823222BA815F300F23153 /* HydrationModel.xcdatamodeld */,
@@ -213,6 +220,7 @@
 		24DC0DEC2BA8867A0055FCA0 /* StatisticsView */ = {
 			isa = PBXGroup;
 			children = (
+				24DC0E0A2BA8BED70055FCA0 /* LottieFiles.swift */,
 				24DC0DF12BA895BF0055FCA0 /* ViewModel */,
 				24DC0DF02BA895BA0055FCA0 /* View */,
 			);
@@ -223,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				241FB48F2BA75ADD00D50BA5 /* HydrationTabView.swift */,
+				24DC0E0C2BA8BF240055FCA0 /* TabImages.swift */,
 			);
 			path = HydrationTabView;
 			sourceTree = "<group>";
@@ -261,6 +270,14 @@
 				24DC0E052BA8AFB70055FCA0 /* HyderationNotificationView.swift */,
 			);
 			path = NotificationView;
+			sourceTree = "<group>";
+		};
+		24DC0E072BA8BE900055FCA0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				24DC0E082BA8BEA50055FCA0 /* Extension+Date.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -402,13 +419,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				241FB48D2BA75AB800D50BA5 /* HomeView.swift in Sources */,
+				24DC0E092BA8BEA50055FCA0 /* Extension+Date.swift in Sources */,
 				24DC0E032BA8AE040055FCA0 /* NotificationManager.swift in Sources */,
 				24DC0DFD2BA89CEE0055FCA0 /* AddLottieView.swift in Sources */,
+				24DC0E0B2BA8BED70055FCA0 /* LottieFiles.swift in Sources */,
 				241FB4922BA75C5300D50BA5 /* StatisticsView.swift in Sources */,
 				24DC0E012BA8A4D40055FCA0 /* StatisticsCardView.swift in Sources */,
 				24ADA8892BA774A60022720F /* CardType.swift in Sources */,
 				24DC0E062BA8AFB70055FCA0 /* HyderationNotificationView.swift in Sources */,
 				24DC0DF32BA895D20055FCA0 /* StatisticsViewModel.swift in Sources */,
+				24DC0E0D2BA8BF240055FCA0 /* TabImages.swift in Sources */,
 				241FB4902BA75ADD00D50BA5 /* HydrationTabView.swift in Sources */,
 				24BCCE3D2BA2EDEC004957A4 /* HydrationTrackerApp.swift in Sources */,
 				24C823272BA8176200F23153 /* CoreDataManager.swift in Sources */,

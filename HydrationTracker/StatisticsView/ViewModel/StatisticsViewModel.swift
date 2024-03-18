@@ -19,11 +19,7 @@ class StatisticsViewModel: ObservableObject {
     @Published var selectedIndex = 0
     
     let coreDataManager = CoreDataManager.shared
-    
-    var hasItems: Bool {
-        return true
-    }
-    
+
     var hasLastSevenDaysData: Bool {
         return !lastSevenDaysData.isEmpty
     }

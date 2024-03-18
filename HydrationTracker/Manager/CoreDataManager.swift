@@ -113,7 +113,3 @@ extension CoreDataManager {
         }
     }
 }
-
-extension CoreDataManager {
-    
-}
