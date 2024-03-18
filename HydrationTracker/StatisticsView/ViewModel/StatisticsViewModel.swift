@@ -15,7 +15,6 @@ class StatisticsViewModel: ObservableObject {
     @Published var maxGlasses: Int = 0
     @Published var daysCompletedTarget: Int = 0
     
-    
     @Published var selectedIndex = 0
     
     let coreDataManager = CoreDataManager.shared
