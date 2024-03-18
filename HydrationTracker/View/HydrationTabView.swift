@@ -9,7 +9,6 @@ import SwiftUI
 
 struct HydrationTabView: View {
     @State private var selectedTab: TabImages = .house
-    
     var body: some View {
         TabView(selection: $selectedTab) {
             NavigationView {

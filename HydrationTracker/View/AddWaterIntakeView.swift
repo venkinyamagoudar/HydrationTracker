@@ -9,17 +9,17 @@ import SwiftUI
 
 struct AddWaterIntakeView: View {
     @Binding var isPresented: Bool
-    @Binding var numberOfGlasses: Int
-    @Binding var waterIntakeEntries: [WaterIntakeEntry]
+    @ObservedObject var viewModel: HomeViewModel
+    @State var numberOfGlasses: Int = 0
+    @State private var showAlert = false
+    
     private let formatter = DateFormatter()
-    var updateCurrentHydration: (Int) -> Void
     
     var body: some View {
         NavigationView{
             VStack {
                 HStack {
                     Button(action: {
-                        // Action to decrease the count
                         if numberOfGlasses > 0 {
                             numberOfGlasses -= 1
                         }
@@ -57,10 +57,14 @@ struct AddWaterIntakeView: View {
                 }
                 
                 Button(action: {
-                    let timestamp = formatter.string(from: Date())
-                    waterIntakeEntries.append(WaterIntakeEntry(amount: "\(numberOfGlasses)", timestamp: timestamp))
-                    updateCurrentHydration(numberOfGlasses)
-                    isPresented = false
+                    if numberOfGlasses > 0 {
+                        viewModel.updateCurrentHydration(amount: Int16(numberOfGlasses))
+                        
+                        viewModel.addWaterIntakeEntry(numberOfGlasses: numberOfGlasses)
+                        isPresented = false
+                    } else {
+                        showAlert = true
+                    }
                 }) {
                     Text("Add")
                         .foregroundColor(.white)
@@ -76,12 +80,14 @@ struct AddWaterIntakeView: View {
             .shadow(radius: 5)
             .padding()
             .navigationTitle("Log Water intake")
+            .navigationBarTitleDisplayMode(.inline)
+            .alert("Cannot Add 0 Glasses", isPresented: $showAlert) {
+                Button("OK", role: .cancel) {}
+            }
         }
     }
 }
 
 #Preview {
-    AddWaterIntakeView(isPresented: .constant(true), numberOfGlasses: .constant(0), waterIntakeEntries: .constant([])){_ in 
-        
-    }
+    AddWaterIntakeView(isPresented: .constant(true), viewModel: HomeViewModel())
 }

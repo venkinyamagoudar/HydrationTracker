@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct WaterIntakeRow: View {
-    let amount: String
-    let timestamp: String
-
+    let amount: Int16
+    let timestamp: Date
+    
     var body: some View {
         HStack {
             Image(systemName: "drop.fill")
@@ -43,17 +43,13 @@ struct WaterIntakeRow: View {
         .padding(.horizontal, 16)
     }
     
-    private func formatTimestamp(_ timestamp: String) -> String {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
-            if let date = formatter.date(from: timestamp) {
-                formatter.dateFormat = "MMM dd, yyyy hh:mm a"
-                return formatter.string(from: date)
-            }
-            return timestamp
-        }
+    private func formatTimestamp(_ timestamp: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM dd, yyyy hh:mm a"
+        return formatter.string(from: timestamp)
+    }
 }
 
 #Preview {
-    WaterIntakeRow(amount: "100", timestamp: "12-11-2024")
+    WaterIntakeRow(amount: 10, timestamp: Date.now)
 }

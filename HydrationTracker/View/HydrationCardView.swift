@@ -9,8 +9,8 @@ import SwiftUI
 
 struct HydrationCardView: View {
     let cardType: CardType
-    @State var amount: Int
     @State var presentEditTargetView:Bool = false
+    @StateObject var viewModel: HomeViewModel
     
     var body: some View {
         let backgroundColor: Color = cardType == .hydrationTarget ? Color.blue.opacity(0.3) : Color.yellow.opacity(0.3)
@@ -35,14 +35,15 @@ struct HydrationCardView: View {
                 }
             }
             Spacer()
-            Text("\(amount) Glass")
+            Text(cardType == .hydrationTarget ? "\(String(viewModel.dailyHydration?.targetHydration ?? 0)) Glass" : "\(String(viewModel.dailyHydration?.currentHydration ?? 0)) Glass")
+
                 .font(.title)
         }
         .padding()
         .background(backgroundColor)
         .cornerRadius(10)
         .sheet(isPresented: $presentEditTargetView, content: {
-            EditTargetView( targetAmount: $amount)
+            EditTargetView(isPresented: $presentEditTargetView, viewModel: viewModel)
                 .presentationDetents([.medium])
                 .presentationBackgroundInteraction(.disabled)
         })
@@ -50,5 +51,5 @@ struct HydrationCardView: View {
 }
 
 #Preview {
-    HydrationCardView(cardType: .hydrationTarget, amount: 700)
+    HydrationCardView(cardType: .hydrationTarget, viewModel: HomeViewModel())
 }

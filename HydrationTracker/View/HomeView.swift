@@ -8,30 +8,35 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State var isShowingAddView: Bool = false
-    @State var currentHydration: Int = 0
-    @State var targetHydration: Int = 0
+    @StateObject var viewModel: HomeViewModel = HomeViewModel()
     
-    @State var waterIntakeEntries: [WaterIntakeEntry] = []
     var body: some View {
         ZStack {
             List {
-                Section(header: Text("Hydration Cards")
-                    .font(.title).fontWeight(.bold).foregroundStyle(Color.primary).backgroundStyle(Color(uiColor: .systemBackground)).textCase(.none)) {
-                    HStack {
-                        VStack {
-                            HydrationCardView(cardType: .hydrationTarget, amount: targetHydration)
-                            HydrationCardView(cardType: .curretHydration, amount: currentHydration)
+                Section(header: Text("Hydration Info")
+                    .font(.headline).fontWeight(.bold).foregroundStyle(Color.primary).backgroundStyle(Color(uiColor: .systemBackground)).textCase(.none)) {
+                        HStack {
+                            VStack {
+                                HydrationCardView(cardType: .hydrationTarget, viewModel: viewModel)
+                                HydrationCardView(cardType: .curretHydration, viewModel: viewModel)
+                            }
                         }
                     }
-                }
-                .listRowInsets(EdgeInsets())
-                .background(Color(uiColor: .systemBackground))
+                    .listRowInsets(EdgeInsets())
+                    .background(Color(uiColor: .systemBackground))
                 
-                Section(header: Text("Today's Water Log").font(.title).fontWeight(.bold).foregroundStyle(Color.primary).textCase(.none)) {
-                    ForEach(waterIntakeEntries ?? [], id: \.self) { entry in
-                        WaterIntakeRow(amount: entry.amount, timestamp: entry.timestamp)
-                            .background(Color(uiColor: .secondarySystemGroupedBackground))
+                Section(header: Text("Today's Water Log").font(.headline).fontWeight(.bold).foregroundStyle(Color.primary).textCase(.none)) {
+                    if let waterIntakeEntriesSet = viewModel.dailyHydration?.waterIntakeEntryList as? Set<WaterIntakeEntry> {
+                        let waterIntakeEntriesArray = Array(waterIntakeEntriesSet)
+                            .sorted(by: { $0.enteredTime! > $1.enteredTime! })
+                        ForEach(waterIntakeEntriesArray, id: \.id) { entry in
+                            WaterIntakeRow(amount: Int16(Int(entry.numberOfGlass)), timestamp: entry.enteredTime!)
+                                .background(Color(uiColor: .secondarySystemGroupedBackground))
+                        }
+                        .onDelete { waterIntakeEntry in
+                            guard let entry = waterIntakeEntry.first else { return }
+                            viewModel.deleteWaterIntakeEntry(item: waterIntakeEntriesArray[entry])
+                        }
                     }
                 }
             }
@@ -42,7 +47,7 @@ struct HomeView: View {
                 HStack {
                     Spacer()
                     Button {
-                        isShowingAddView.toggle()
+                        viewModel.isShowingAddView.toggle()
                     } label: {
                         Image(systemName: "plus")
                             .padding()
@@ -55,16 +60,69 @@ struct HomeView: View {
                 }
             }
         }
-        .sheet(isPresented: $isShowingAddView) {
-            AddWaterIntakeView(isPresented: $isShowingAddView, numberOfGlasses: $currentHydration, waterIntakeEntries: $waterIntakeEntries){
-                currentHydration += $0
-            }
+        .sheet(isPresented: $viewModel.isShowingAddView) {
+            AddWaterIntakeView(isPresented: $viewModel.isShowingAddView, viewModel: viewModel)
                 .presentationDetents([.medium])
                 .presentationBackgroundInteraction(.disabled)
         }
+        .onAppear {
+            viewModel.createDailyHydrationIfNeeded(for: Date())
+        }
+        .navigationBarTitleDisplayMode(.large)
+        .navigationTitle("Hydration Tracker")
     }
 }
 
 #Preview {
     HomeView()
+}
+
+class HomeViewModel: ObservableObject {
+    @Published var isShowingAddView: Bool = false
+    @Published var dailyHydration: DailyHydration?
+    
+    let coreDataManager = CoreDataManager.shared
+    
+    func fetchDailyHydration(for date: Date) {
+        dailyHydration = coreDataManager.fetchDailyHydration(for: date)
+    }
+    
+    func createDailyHydrationIfNeeded(for date: Date) {
+        guard let newDailyHydration = coreDataManager.createDailyHydrationIfNeeded(for: date) else {
+            return
+        }
+        dailyHydration = newDailyHydration
+    }
+    
+    func updateHydrationTarget(target: Int) {
+        guard let dailyHydration = dailyHydration,
+              let dailyHydrationID = dailyHydration.id else { return }
+        
+        guard let updatedDailyHydration = coreDataManager.updateHydrationTarget(for: dailyHydrationID, target: target) else { return }
+        
+        self.dailyHydration = updatedDailyHydration
+    }
+    
+    func updateCurrentHydration(amount: Int16) {
+        guard let dailyHydration = dailyHydration,
+              let dailyHydrationID = dailyHydration.id else { return }
+        
+        guard let updatedDailyHydration = coreDataManager.updateCurrentHydration(for: dailyHydrationID, amount: amount) else { return }
+        
+        self.dailyHydration = updatedDailyHydration
+    }
+    
+    func addWaterIntakeEntry(numberOfGlasses: Int) {
+        guard let dailyHydration = dailyHydration,
+              let dailyHydrationID = dailyHydration.id,
+              let updatedDailyHydration = coreDataManager.addWaterIntakeEntry(in: dailyHydrationID, using: numberOfGlasses, timestamp: Date.now) else { return }
+        self.dailyHydration = updatedDailyHydration
+    }
+    
+    func deleteWaterIntakeEntry(item : WaterIntakeEntry) {
+        guard let dailyHydration = dailyHydration,
+              let dailyHydrationID = dailyHydration.id,
+              let updatedDailyHydration = coreDataManager.deleteWaterIntakeEntry(in: dailyHydrationID, item: item) else { return }
+        self.dailyHydration = updatedDailyHydration
+    }
 }

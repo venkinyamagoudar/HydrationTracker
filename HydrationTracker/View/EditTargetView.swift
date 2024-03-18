@@ -8,59 +8,46 @@
 import SwiftUI
 
 struct EditTargetView: View {
-    @Binding var targetAmount: Int
+    @Binding var isPresented: Bool
+    @StateObject var viewModel: HomeViewModel
+    @State private var showAlert = false
+    @State private var targetHydration = 0
     
     var body: some View {
-        NavigationView{
+        NavigationView {
             VStack {
-                HStack {
-                    Button(action: {
-                        // Action to decrease the count
-                        if targetAmount > 0 {
-                            targetAmount -= 1
-                        }
-                    }) {
-                        Image(systemName: "minus")
-                            .padding()
-                            .foregroundColor(.white)
-                            .frame(width: 50, height: 50)
-                    }
-                    .background(Color.blue)
-                    .cornerRadius(35)
+                Stepper("Target Hydration: \(targetHydration)", value: $targetHydration, in: 0...Int.max)
                     .padding()
-                    ZStack {
-                        Text("\(targetAmount)")
-                            .font(.title)
-                            .fontWeight(.bold)
-                        Image(systemName: "drop")
-                            .resizable()
-                            .foregroundStyle(Color.blue.opacity(0.3))
-                            .frame(width: 150,height: 200)
-                    }
-                    .padding(.vertical)
-                    
-                    Button(action: {
-                        targetAmount += 1
-                    }) {
-                        Image(systemName: "plus")
-                            .padding()
-                            .foregroundColor(.white)
-                            .frame(width: 50, height: 50)
-                    }
-                    .background(Color.blue)
-                    .cornerRadius(35)
-                    .padding()
+                
+                Button(action: {
+                    viewModel.updateHydrationTarget(target: targetHydration)
+                    isPresented = false
+                }) {
+                    Text("Save")
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .cornerRadius(10)
                 }
+                .padding()
             }
             .background(Color.white)
             .cornerRadius(20)
             .shadow(radius: 5)
             .padding()
             .navigationTitle("Edit Hydration Target")
+            .navigationBarTitleDisplayMode(.inline)
+            .alert("Cannot Set 0 Glasses as target", isPresented: $showAlert) {
+                Button("OK", role: .cancel) {}
+            }
+        }
+        .onAppear {
+            targetHydration = Int(viewModel.dailyHydration?.targetHydration ?? 0)
         }
     }
 }
 
 #Preview {
-    EditTargetView(targetAmount: .constant(20))
+    EditTargetView(isPresented: .constant(true), viewModel: HomeViewModel())
 }
