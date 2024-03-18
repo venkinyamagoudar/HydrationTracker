@@ -9,9 +9,9 @@ import SwiftUI
 
 struct EditTargetView: View {
     @Binding var isPresented: Bool
-    @StateObject var viewModel: HomeViewModel
     @State private var showAlert = false
     @State private var targetHydration = 0
+    @StateObject var viewModel: HomeViewModel
     
     var body: some View {
         NavigationView {
