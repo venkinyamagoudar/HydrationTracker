@@ -71,7 +71,7 @@ class HomeViewModel: ObservableObject {
            Calendar.current.isDate(lastNotificationDate, inSameDayAs: today) {
             return
         }
-        if current >= target {
+        if target > 0 && current >= target {
             NotificationManager.shared.sendAchievementNotification()
             userDefaults.set(today, forKey: "lastAchievementNotificationDate")
         }
