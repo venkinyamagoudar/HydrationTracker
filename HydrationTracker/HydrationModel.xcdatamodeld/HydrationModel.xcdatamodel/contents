@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23D56" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="DailyHydration" representedClassName="DailyHydration" syncable="YES" codeGenerationType="class">
+        <attribute name="currentHydration" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="targetHydration" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="waterIntakeEntryList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WaterIntakeEntry" inverseName="hyderationList" inverseEntity="WaterIntakeEntry"/>
+    </entity>
+    <entity name="WaterIntakeEntry" representedClassName="WaterIntakeEntry" syncable="YES" codeGenerationType="class">
+        <attribute name="enteredTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="numberOfGlass" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="hyderationList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailyHydration" inverseName="waterIntakeEntryList" inverseEntity="DailyHydration"/>
+    </entity>
+</model>
