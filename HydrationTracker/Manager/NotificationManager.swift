@@ -74,3 +74,9 @@ class NotificationManager {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
     }
 }
+
+extension NotificationManager {
+    func sample() {
+        
+    }
+}
